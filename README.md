@@ -1,71 +1,132 @@
 # TinderBot
-Simple bot for Tinder using selenium written in python3
 
-## Make sure python and pip are installed
-Pip should be included with python by default.<br />
-Dowload python: https://www.python.org/downloads/
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://user-images.githubusercontent.com/60892381/94200140-384a7f80-feba-11ea-8fcf-ec4507eda017.jpg">
+    <img src="https://user-images.githubusercontent.com/60892381/94200140-384a7f80-feba-11ea-8fcf-ec4507eda017.jpg">
+  </a>
 
-## Usage of a virtual environment recommended
-### install virtualenv
+  <h3 align="center">TINDERBOT AND PROFILESCRAPER</h3>
+
+  <p align="center">
+    Tinder web automation and scraper.
+    <br />
+    <a href="https://github.com/frederikme/TinderBot/blob/master/DOCUMENTATION.md"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="#demonstration">View Demo</a>
+    ·
+    <a href="https://github.com/frederikme/TinderBot/issues/new?assignees=&labels=&template=bug_report.md&title=">Report Bug</a>
+    ·
+    <a href="https://github.com/frederikme/TinderBot/issues/new?assignees=&labels=&template=feature_request.md&title=">Request Feature</a>
+  </p>
+</p>
+
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+  * [Breaking Record](#breaking-record)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage-of-tinderbot)
+  * [Documentation](DOCUMENTATION.md)
+  * [Demo](#demonstration)
+* [Coming Soon Features](#coming-soon-features)
+  * [Picture is Worth a Thousand Words](#a-picture-is-worth-a-thousand-words)
+  * [Finally a Worthy Opponent](#finally-a-worthy-opponent)
+  * [Integrating Scraping](#integrating-scraping-better)
+* [Support the Repository](#support-the-repository)
+
+<!-- ABOUT THE PROJECT -->
+## About the Project
+**IMPORTANT: Starring the project indicates shows your appreciation and will result in new features being added!**</br>
+</br>
+This project started with the motivation of learning web automation further and scraping with Python.</br>
+I managed to succesfully create a bot that could: </br>
+
+* Open a browser and login to Tinder.com
+* Setting a custom location for **FREE** (which is normally a paid-for-***Tinder Plus***-feature)
+* Setting profile settings and preferences, such as distance radius, minimum and maximum age, sexuality.
+* Accept all notifications and dismiss pop-ups
+* Swiping x amount of profiles left or right
+* Scraping data of the profiles displayed, including, yet not limited to, name, age, bio, images, ...
+* Sending personalized messages to your matches
+* Sending you social media cards, like Instagram, Snapchat, Phonenumber and Facebook
+* Sending GIFS and songs
+* Unmatching
+
+If you feel like diving right in, the [quickstart.py](https://github.com/frederikme/TinderBot/blob/master/quickstart.py) will help you be right on track.</br>
+*Feel free to make a pull request and contribute to this project!*</br>
+</br>
+***Enjoy! :)***</br>
+</br>
+**INFO: now also available as a PIP INSTALL as illustrated [here](#installation)**</br>
+
+### Built with
+
+* [Python](https://www.python.org/)
+* [Selenium](https://selenium.dev)
+* [LocationGuard](https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia)
+
+### Breaking Record
+**I broke the world record most matches using this script!**</br>
+Reached 1000 matches in the first 24hours.</br>
+Currently at 19500 matches!</br>
+
+<p align="center">
+  <a href="https://user-images.githubusercontent.com/60892381/102367974-a46ce900-3fba-11eb-9ff8-733ba98a5996.jpg">
+    <img src="https://user-images.githubusercontent.com/60892381/102367974-a46ce900-3fba-11eb-9ff8-733ba98a5996.jpg">
+  </a>
+</p>
+
+<!-- Getting Started -->
+## Getting Started
+### Prerequisites
+
+- Environment running python 3.x
+- Tinder account with Google or Facebook login enabled
+
+### Installation
+#### PyPi
+You can now install the project as a pip package.
 ```
-pip3 install virtualenv 
+pip3 install tinderbotz
 ```
-### Create virtual environment
-```
-virtualenv venv
-```
-### Activate virtual environment
-```
-source venv/bin/activate
-```
-### To deactivate or leave the virtual environment
-```
-deactivate
-```
-## Install dependencies (preferably in the venv)
+#### Github
+1. Clone or download the project
+2. Install the required packages
 ```
 pip3 install -r requirements.txt
 ```
-## Features
-```
-# create instance of the bot
-bot = TinderBot()
 
-# you need a verified email to login like this
-bot.loginUsingGoogle(email, password) 
+## Usage of Tinderbot
+### Features
+Features of Tinderbot as demonstrated belowed can be found here: **[Tinderbot features](https://github.com/frederikme/TinderBot/blob/master/DOCUMENTATION.md)**</br>
 
-# alternatively you can login using Facebook
-bot.loginUsingFacebook(email, password)
+### Demonstration
+#### Setting a custom location
+<img src="https://user-images.githubusercontent.com/60892381/99286075-a8c9a900-2838-11eb-86b6-4b8c028bee63.gif"></src>
 
-# this will (dis/super)like x amount of people in a row
-bot.like(amount) 
-bot.dislike(amount)
-bot.superlike(amount)
+#### Setting some Profile settings
+<img src="https://user-images.githubusercontent.com/60892381/99513887-682e7480-298b-11eb-810f-caae7424a792.gif"></src>
 
-# There are 2 types of matches:
-#  - new matches with whom you haven't interacted yet
-#  - matches with whom you've already chatted/interacted
-new_matches = bot.getNewMatches()
-messaged_matches = bot.getChattedMatches()
+#### Liking 10 profiles in row + dismissing potential pop ups
+<img src="https://user-images.githubusercontent.com/60892381/94987708-92a5a900-0568-11eb-88fc-f6be69354d73.gif"></src>
 
-# - or simply get all matches (new+chatted) by default store_local=True stored in /data/matches.json
-matches = bot.getAllMatches()
+#### Scraping your matches (new matches + messaged matches)
+<img src="https://user-images.githubusercontent.com/60892381/94995711-702f8200-05a0-11eb-9273-bfbb48ce168c.gif"></src>
 
-# send message to a user
-bot.sendMessage(id, message)
+#### Sending personalized messages to your matches
+<img src="https://user-images.githubusercontent.com/60892381/94997724-43ce3280-05ad-11eb-8a94-0a66f0afbf93.gif"></src>
 
-# returns a url to the image of the match (AND when by default store_local=True it will store the image as jpeg in /data/images/matchid.jpg
-bot.getImage(id)
 
-# searches for a gif and then sends the first one of the query
-bot.sendGif(id, gifname)
+## Support the Repository
+Feel free to make a pull request and contribute to this project.</br>
+If you feel like buying me a drink:
+* [Paypal](https://paypal.me/frederikmees)
+* [Patreon](https://www.patreon.com/frederikme)
 
-# searches for a song and then sends the first one of the query
-bot.sendSong(id, songname)
-
-# send my Socials.INSTAGRAM or you can use alternative socials like facebook, phonenumber and snapchat and value as username
-bot.sendSocials(id, media, value)
-
-# possibilty to unmatch your match by id
-bot.unMatch(id)
-```

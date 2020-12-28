@@ -1,60 +1,96 @@
 '''
 Created by Frederikme (TeetiFM)
-Examples of usage are demonstrated in this quickstart.py file
 '''
 
-from bot import *
-from helpers.socials import Socials
+from tinderbotz.session import Session
+from tinderbotz.helpers.constants_helper import *
 
-email = "example@email.com"
-password = "password123"
+import constants
 
 if __name__ == "__main__":
 
-    # creates instance of bot
-    bot = TinderBot()
+    # creates instance of session
+    session = Session()
 
-    # login using your google account
-    bot.loginUsingGoogle(email=email, password=password)
+    # set location (Don't need to be logged in for this)
+    session.setCustomLocation("Leuven, Belgium")
 
-    # alternatively login using facebook (might need adjustments and follow up, so if you feel like contributing ;)
-    bot.loginUsingFacebook(email=email, password=password)
+    # login using your google account with a verified email!
+    session.loginUsingGoogle(email=constants.email_google, password=constants.password_google)
 
+    # Alternatively you can login using facebook with a connected profile!
+    session.loginUsingFacebook(email=constants.email_facebook, password=constants.password_facebook)
+    
     # spam likes, dislikes and superlikes
-    bot.like(amount=5)
-    bot.dislike(amount=0)
-    bot.superlike(amount=0)
+    # to avoid being banned:
+    #   - it's best to apply a randomness in your liking by sometimes disliking.
+    #   - some sleeping between two actions is recommended
+    # NOTE: these recommendations apply mostly to large amounts of swiping (+100 likes)
+    session.like(amount=10, ratio="72.5%", sleep=1)
+    session.dislike(amount=1)
+    session.superlike(amount=1)
+    
+    # adjust allowed distance for geomatches
+    # Note: You need to be logged in for this setting
+    # Note: PARAMETER IS IN KILOMETERS!
+    session.setDistanceRange(km=150)
 
+    # set range of allowed ages
+    # Note: You need to be logged in for this setting
+    session.setAgeRange(18, 55)
+
+    # set interested in gender(s) -> options are: WOMEN, MEN, EVERYONE
+    session.setSexuality(Sexuality.WOMEN)
+
+    # Allow profiles from all over the world to appear
+    session.setGlobal(True)
+
+    # Getting matches takes a while, so recommended you load as much as possible from local storage
     # get new matches, with whom you haven't interacted yet
-    new_matches = bot.getNewMatches()
+    new_matches = session.getNewMatches()
     # get already interacted with matches
-    old_matches = bot.getChattedMatches()
-    # get all matches and store them also locally in data directory
-    matches = bot.getAllMatches(store_local=True)
+    old_matches = session.getMessagedMatches()
+    # get all matches (comment out new_matches and old_matches above so it doesnt load it all for no reason)
+    matches = session.getAllMatches()
 
-    # My pick up line with personal name so it doesn't look spammy
+    # you can store the data and images of these matches now locally in data/matches
+    for match in matches:
+        session.storeLocal(match)
+
+    # Pick up line with their personal name so it doesn't look spammy
     pickup_line = "Hey {}! You. Me. Pizza? Or do you not like pizza?"
 
-    # loop through my new matches
+    # loop through my new matches and send them the first message of the conversation
     for match in new_matches:
-        # store name and id locally so we can use it more simply
+        # store name and chatid in variables so we can use it more simply later on
         name = match.getName()
-        id = match.getID()
+        id = match.getChatID()
 
-        # returns their image_url and storing them in our data directory
-        bot.getImage(id=id, store_local=True)
+        print(name, id)
+
+        # Format the match her/his name in your pickup line for a more personal approach.
+        message = pickup_line.format(name)
 
         # send pick up line with their name in it to all my matches
-        bot.sendMessage(id=id, message=pickup_line.format(name))
+        session.sendMessage(chatid=id, message=message)
 
         # send a funny gif
-        bot.sendGif(id=id, gifname="pizza")
+        session.sendGif(chatid=id, gifname="")
 
         # send a funny song
-        bot.sendSong(id=id, songname="cutiepie")
+        session.sendSong(chatid=id, songname="")
 
         # send my instagram or you can use alternative socials like facebook, phonenumber and snapchat
-        bot.sendSocials(id=id, media=Socials.INSTAGRAM, value="Teeti.fm")
+        session.sendSocials(chatid=id, media=Socials.INSTAGRAM, value="Teeti.fm")
 
         # you can also unmatch
-        # bot.unMatch(id=id)
+        #session.unMatch(chatid=id)
+
+    # let's scrape some geomatches now
+    for _ in range(5):
+        # get profile data (name, age, bio, images, ...)
+        geomatch = session.getGeomatch()
+        # store this data locally as json with reference to their respective (locally stored) images
+        session.storeLocal(geomatch)
+        # dislike the profile, so it will show us the next geomatch (since we got infinite amount of dislikes anyway)
+        session.dislike()
